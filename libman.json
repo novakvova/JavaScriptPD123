@@ -9,6 +9,22 @@
         "js/bootstrap.bundle.min.js",
         "css/bootstrap.min.css"
       ]
+    },
+    {
+      "library": "cropperjs@1.5.13",
+      "destination": "lib/cropperjs/",
+      "files": [
+        "cropper.min.js",
+        "cropper.min.css"
+      ]
+    },
+    {
+      "library": "select2@4.0.13",
+      "destination": "lib/select2/"
+    },
+    {
+      "library": "jquery@3.6.1",
+      "destination": "lib/jquery/"
     }
   ]
 }

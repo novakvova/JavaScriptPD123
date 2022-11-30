@@ -4,7 +4,17 @@
     <meta charset="utf-8" />
     <title>Реєстрація користувача</title>
     <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="lib/cropperjs/cropper.min.css" rel="stylesheet" />
+    <link href="lib/select2/css/select2.min.css" rel="stylesheet" />
     <link href="css/site.css" rel="stylesheet" />
+    <style>
+        .preview {
+            height: 100px !important;
+            width: 100px !important;
+            border: 1px solid silver;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body>
     <script src="js/site.js"></script>
@@ -80,9 +90,64 @@
             </form>
         </div>
     </main>
-
+    <script>
+        var request = new XMLHttpRequest();
+        request.open("GET", '_modelCropper.html', false); // false for synchronous request
+        request.send(null);
+        document.write(request.responseText);
+    </script>
 
 
     <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/jquery/jquery.min.js"></script>
+    <script src="lib/cropperjs/cropper.min.js"></script>
+    <script src="lib/select2/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#country").select2();
+        });
+    </script>
+
+    <script>
+        let image = document.getElementById("image");
+        let imgCropper = document.getElementById("imgCropper");
+        let imgPrev = document.getElementById("imgPrev");
+        let cropper = new Cropper(imgCropper,
+            {
+                aspectRatio: 1 / 1,
+                viewMode: 1,
+                preview: imgPrev
+            });
+
+        image.onchange = function (e) {
+            console.log("Select file");
+            let file = e.target.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                let modal = bootstrap.Modal.getOrCreateInstance(document.getElementById("cropperModal"));
+                modal.show();
+                cropper.replace(url);
+                image.value = "";
+            }
+        }
+
+        const btnLeft = document.getElementById("btnLeft");
+        btnLeft.onclick = function () {
+            cropper.rotate(-90);
+        }
+
+        const btnRight = document.getElementById("btnRight");
+        btnRight.onclick = function () {
+            cropper.rotate(90);
+        }
+        let btnAdd = document.getElementById("btnAdd");
+        btnAdd.onclick = function () {
+            const base64 = cropper.getCroppedCanvas().toDataURL();
+            let selectImage = document.getElementById("selectImage");
+            selectImage.src = base64;
+            let modal = bootstrap.Modal.getOrCreateInstance(document.getElementById("cropperModal"));
+            modal.hide();
+        }
+    </script>
 </body>
 </html>
