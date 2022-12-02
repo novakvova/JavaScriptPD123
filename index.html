@@ -2,152 +2,69 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Реєстрація користувача</title>
+    <title>Список користувачів</title>
     <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="lib/cropperjs/cropper.min.css" rel="stylesheet" />
-    <link href="lib/select2/css/select2.min.css" rel="stylesheet" />
     <link href="css/site.css" rel="stylesheet" />
-    <style>
-        .preview {
-            height: 100px !important;
-            width: 100px !important;
-            border: 1px solid silver;
-            overflow: hidden;
-        }
-    </style>
+
 </head>
 <body>
     <script src="js/site.js"></script>
     <main>
         <div class="container">
-            <h1 class="text-center">Реєстрація</h1>
-            <form class="col-md-6 offset-md-3 need-validation" novalidate>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="lastName" class="form-label">Прізвище</label>
-                            <input type="text" class="form-control" id="lastName" required>
-                            <div class="invalid-feedback">
-                                Вказіть прізвище
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="firstName" class="form-label">Ім'я</label>
-                            <input type="text" class="form-control" id="firstName" required>
-                            <div class="invalid-feedback">
-                                Вказіть ім'я
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="country" class="form-label">Країна</label>
-                            <select class="form-select" id="country" required>
-                                <option selected value="">Оберіть країну</option>
-                                <option value="1">Україна</option>
-                                <option value="2">Польща</option>
-                            </select>
-                            <div class="invalid-feedback">Оберіть країну</div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="phone" class="form-label">Телефон</label>
-                            <input type="text" class="form-control" id="phone">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="email" class="form-label">Електронна пошта</label>
-                    <input type="email" class="form-control" id="email">
-                </div>
-
-                <div class="mb-3">
-                    <label for="image" class="form-label">
-                        Фото
-                        <img src="images/select.png"
-                             alt="select image"
-                             width="150"
-                             id="selectImage"
-                             style="cursor:pointer" />
-                    </label>
-                    <input type="file"
-                           style="display:none;"
-                           class="form-control"
-                           id="image">
-                </div>
-
-                <div class="mb-3">
-                    <label for="password" class="form-label">Пароль</label>
-                    <input type="password" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-primary">Реєструватися</button>
-            </form>
+            <h1 class="text-center">Користувачі</h1>
+            <div id="contentPage">
+               
+               
+            </div>
         </div>
     </main>
-    <script>
-        var request = new XMLHttpRequest();
-        request.open("GET", '_modelCropper.html', false); // false for synchronous request
-        request.send(null);
-        document.write(request.responseText);
-    </script>
 
 
     <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="lib/jquery/jquery.min.js"></script>
-    <script src="lib/cropperjs/cropper.min.js"></script>
-    <script src="lib/select2/js/select2.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $("#country").select2();
-        });
-    </script>
-
-    <script>
-        let image = document.getElementById("image");
-        let imgCropper = document.getElementById("imgCropper");
-        let imgPrev = document.getElementById("imgPrev");
-        let cropper = new Cropper(imgCropper,
+        let users = [{
+            Image: "https://avatars.mds.yandex.net/i?id=84dbd50839c3d640ebfc0de20994c30d-4473719-images-taas-consumers&n=27&h=480&w=480",
+            Name: "Мельник Петро",
+            Country: "Україна",
+            Phone: "098 23 43 211",
+            Email: "novakvova@gmail.com",
+            DateCreate: "2.12.2022 16:14:28"
+        },
             {
-                aspectRatio: 1 / 1,
-                viewMode: 1,
-                preview: imgPrev
-            });
+                Image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSL7kM80zxq9X5xeqrBndkQynwiV3LNzUs4A&usqp=CAU",
+                Name: "Марко Іванна",
+                Country: "Польща",
+                Phone: "098 23 43 098",
+                Email: "markoivanka@gmail.com",
+                DateCreate: "1.12.2022 1:14:28"
+            }];
+        let data = "";
+        for (let i = 0; i < users.length; i++) {
+            let item = `
+         <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-3">
+                            <img src="${users[i].Image}"
+                                 width="100%"
+                                 alt="Фото Івана">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="card-body">
+                                <h5 class="card-title">${users[i].Name}</h5>
+                                <p class="card-text">Країна <b>${users[i].Country}</b></p>
+                                <p class="card-text">тел. <b>${users[i].Phone}</b></p>
+                                <p class="card-text">email <b>${users[i].Email}</b></p>
+                                <p class="card-text"><small class="text-muted">${users[i].DateCreate}</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            data += item;
+        }
+        document.getElementById("contentPage").innerHTML = data;
 
-        image.onchange = function (e) {
-            console.log("Select file");
-            let file = e.target.files[0];
-            if (file) {
-                const url = URL.createObjectURL(file);
-                let modal = bootstrap.Modal.getOrCreateInstance(document.getElementById("cropperModal"));
-                modal.show();
-                cropper.replace(url);
-                image.value = "";
-            }
-        }
-
-        const btnLeft = document.getElementById("btnLeft");
-        btnLeft.onclick = function () {
-            cropper.rotate(-90);
-        }
-
-        const btnRight = document.getElementById("btnRight");
-        btnRight.onclick = function () {
-            cropper.rotate(90);
-        }
-        let btnAdd = document.getElementById("btnAdd");
-        btnAdd.onclick = function () {
-            const base64 = cropper.getCroppedCanvas().toDataURL();
-            let selectImage = document.getElementById("selectImage");
-            selectImage.src = base64;
-            let modal = bootstrap.Modal.getOrCreateInstance(document.getElementById("cropperModal"));
-            modal.hide();
-        }
     </script>
 </body>
 </html>
